@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rayanne Ernandez — Desenvolvedora Full Stack, Mobile & IA</title>
+  <meta name="description" content="Portfólio de Rayanne Ernandez — Desenvolvedora Full Stack, Mobile e Inteligência Artificial. Rio de Janeiro, Brasil." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23111'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>R.</text></svg>" />
+
+  <!-- aplica tema e idioma salvos ANTES da pintura (evita flash) -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+        var l = localStorage.getItem('lang') || 'pt';
+        document.documentElement.lang = l === 'pt' ? 'pt-BR' : l;
+      } catch (e) { }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══════════ LOADER ══════════ -->
+  <div class="loader" id="loader">
+    <div class="loader__count"><span id="loaderNum">0</span>%</div>
+    <div class="loader__phrase" data-i18n="loader.phrase">construindo do zero...</div>
+    <div class="loader__ball" id="loaderBall"></div>
+  </div>
+
+  <!-- ══════════ CURSOR ══════════ -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ══════════ NAV ══════════ -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav__logo" data-hover>R<span class="accent">.</span>E</a>
+    <nav class="nav__links">
+      <a href="#sobre" data-hover data-i18n="nav.sobre">Sobre</a>
+      <a href="#trajetoria" data-hover data-i18n="nav.trajetoria">Trajetória</a>
+      <a href="#projetos" data-hover data-i18n="nav.projetos">Projetos</a>
+      <a href="#skills" data-hover>Skills</a>
+      <a href="#experiencia" data-hover data-i18n="nav.experiencia">Experiência</a>
+      <a href="#certificacoes" data-hover data-i18n="nav.certificacoes">Certificações</a>
+    </nav>
+    <div class="nav__ctrl">
+      <div class="lang" id="langSwitch" role="group" aria-label="Idioma">
+        <button data-lang="pt" data-hover>PT</button>
+        <button data-lang="en" data-hover>EN</button>
+        <button data-lang="es" data-hover>ES</button>
+      </div>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema" data-hover>
+        <span class="theme-btn__sun">☀</span><span class="theme-btn__moon">☾</span>
+      </button>
+      <a href="#contato" class="nav__cta" data-hover data-i18n="nav.cta">Vamos conversar</a>
+      <button class="nav__burger" id="burger" aria-label="Menu" data-hover>
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- menu mobile -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#sobre" data-i18n="nav.sobre">Sobre</a>
+    <a href="#trajetoria" data-i18n="nav.trajetoria">Trajetória</a>
+    <a href="#projetos" data-i18n="nav.projetos">Projetos</a>
+    <a href="#skills">Skills</a>
+    <a href="#experiencia" data-i18n="nav.experiencia">Experiência</a>
+    <a href="#certificacoes" data-i18n="nav.certificacoes">Certificações</a>
+    <a href="#contato" data-i18n="nav.contato">Contato</a>
+  </div>
+
+  <main>
+
+    <!-- ══════════ 01 · HERO — partículas que se desfazem (dobre.agency) ══════════ -->
+    <section class="hero" id="hero">
+      <canvas id="particleCanvas" class="hero__canvas"></canvas>
+      <div class="hero__content">
+        <p class="hero__hello reveal-up" data-i18n="hero.hello">Olá, eu sou a</p>
+        <h1 class="hero__name">
+          <span class="hero__line"><span class="hero__word">Rayanne</span></span>
+          <span class="hero__line"><span class="hero__word">Ernandez<span class="accent">.</span></span></span>
+        </h1>
+        <p class="hero__role reveal-up" data-i18n="hero.role">
+          Desenvolvedora <strong>Full&nbsp;Stack</strong> · <strong>Mobile</strong> · <strong>Inteligência&nbsp;Artificial</strong>
+        </p>
+        <div class="hero__meta reveal-up">
+          <span data-i18n="hero.local">Rio de Janeiro, Brasil</span>
+          <span class="hero__dot-sep"></span>
+          <span data-i18n="hero.avail">disponível para projetos</span>
+        </div>
+      </div>
+      <div class="hero__scroll">
+        <span>scroll</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 02 · CODE IN MOTION — vídeo que escala no scroll (wearemotto) ══════════ -->
+    <section class="scale-sec" id="craft">
+      <div class="scale-pin">
+        <h2 class="scale-heading" data-i18n="craft.heading">código em<br/>movimento</h2>
+        <div class="scale-media" id="scaleMedia">
+          <div class="term-chrome">
+            <span class="term-dot td-r"></span><span class="term-dot td-y"></span><span class="term-dot td-g"></span>
+            <span class="term-title">rayanne@dev: ~/portfolio</span>
+          </div>
+          <canvas id="codeCanvas"></canvas>
+        </div>
+        <p class="scale-phrase" id="scalePhrase" data-i18n="craft.phrase">
+          Eu transformo <span class="phrase-slot" id="phraseSlot"></span> ideias em <em>produtos digitais</em> que funcionam.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════ 03 · VITRINE — marquee arrastável (djectstudio) ══════════ -->
+    <section class="works" id="vitrine">
+      <div class="works__head">
+        <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="works.tag">no ar</span></div>
+        <h2 class="works__title split-lines" data-i18n="works.title">Coisas que eu construí<br/>e que estão no ar<span class="accent">.</span></h2>
+        <p class="works__hint hand reveal-up" data-i18n="works.hint">arraste pra passear pelos projetos ✦</p>
+      </div>
+      <div class="marquee-wrap">
+        <div class="marquee marquee--left" id="marqueeA"><div class="marquee__track"></div></div>
+        <div class="marquee marquee--right" id="marqueeB"><div class="marquee__track"></div></div>
+        <div class="marquee-fade marquee-fade--l"></div>
+        <div class="marquee-fade marquee-fade--r"></div>
+      </div>
+    </section>
+
+    <!-- ══════════ 04 · SOBRE ══════════ -->
+    <section class="about" id="sobre">
+      <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="about.tag">sobre mim</span></div>
+      <div class="about__grid">
+        <div class="about__text">
+          <p class="about__big split-lines" data-i18n="about.big">Minha história com código não começou num teclado começou num <em>escritório de elevadores</em>.</p>
+          <p class="reveal-up" data-i18n="about.p1">Eu trabalhava no setor administrativo enquanto cursava Administração. Até que me pediram para criar o manual de um sistema interno — e ali descobri minha verdadeira paixão: <strong>construir do zero, criar, inovar, desenvolver</strong>.</p>
+          <p class="reveal-up" data-i18n="about.p2">Larguei ADM, me formei em <strong>Análise e Desenvolvimento de Sistemas</strong> e hoje trabalho com desenvolvimento web, mobile, dashboards, projetos de <strong>Inteligência Artificial</strong> e automação de processos.</p>
+        </div>
+        <div class="about__stats">
+          <div class="stat reveal-up"><span class="stat__num" data-count="3">0</span><span class="stat__plus">+</span><span class="stat__label" data-i18n="about.s1">anos na área</span></div>
+          <div class="stat reveal-up"><span class="stat__num" data-count="16">0</span><span class="stat__plus">+</span><span class="stat__label" data-i18n="about.s2">projetos construídos</span></div>
+          <div class="stat reveal-up"><span class="stat__num" data-count="8">0</span><span class="stat__plus"></span><span class="stat__label" data-i18n="about.s3">certificações</span></div>
+          <div class="stat reveal-up"><span class="stat__num stat__inf">∞</span><span class="stat__plus"></span><span class="stat__label" data-i18n="about.s4">vontade de aprender</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 05 · SÍMBOLO { } — frases no escuro (djectstudio) ══════════ -->
+    <section class="ball-sec" id="ballSec">
+      <div class="ball-pin">
+        <h2 class="ball-line ball-line--a" id="ballLineA" data-i18n="ball.a">Construir do zero.</h2>
+        <div class="ball" id="theBall" aria-hidden="true">{&nbsp;}</div>
+        <div class="ball-cover" id="ballCover"></div>
+        <div class="ball-words">
+          <h2 class="ball-word" data-word="0" data-i18n="ball.w1">Criar<span class="accent">.</span></h2>
+          <h2 class="ball-word" data-word="1" data-i18n="ball.w2">Inovar<span class="accent">.</span></h2>
+          <h2 class="ball-word" data-word="2" data-i18n="ball.w3">Desenvolver<span class="accent">.</span></h2>
+        </div>
+        <h2 class="ball-line ball-line--b" id="ballLineB"><span data-i18n="ball.b">É isso que eu faço</span><span class="ball-dot-slot" id="ballDot">.</span></h2>
+      </div>
+    </section>
+
+    <!-- ══════════ 06 · TRAJETÓRIA — linha do tempo (danielsun.space) ══════════ -->
+    <section class="timeline" id="trajetoria">
+      <div class="timeline__viewport" id="tlViewport">
+        <div class="timeline__head">
+          <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="tl.tag">minha trajetória</span></div>
+          <p class="timeline__hand reveal-up" data-i18n="tl.hand">cada experiência da minha vida<br/>foi importante e me ensinou muito ✦</p>
+        </div>
+        <div class="timeline__track" id="tlTrack">
+          <svg class="timeline__path" id="tlSvg" preserveAspectRatio="none" aria-hidden="true">
+            <path id="tlPathEl" fill="none" />
+          </svg>
+
+          <div class="tl-item" style="--i:0">
+            <div class="tl-badge">🏢</div>
+            <span class="tl-year hand">2021</span>
+            <h3 data-i18n="tl.i1t">Auxiliar Administrativa</h3>
+            <p data-i18n="tl.i1p">Elevadores Alpha — planilhas, cobranças, atendimento. Cursando <strong>Administração</strong> à noite.</p>
+          </div>
+
+          <div class="tl-item" style="--i:1">
+            <div class="tl-badge">💡</div>
+            <span class="tl-year hand" data-i18n="tl.i2y">o clique</span>
+            <h3 data-i18n="tl.i2t">O manual que mudou tudo</h3>
+            <p data-i18n="tl.i2p">Me pediram um manual de sistema interno. Descobri que eu amava <strong>construir</strong> me interessante em como era por trás e que ADM não era meu caminho.</p>
+          </div>
+
+          <div class="tl-item" style="--i:2">
+            <div class="tl-badge">🎓</div>
+            <span class="tl-year hand" data-i18n="tl.i3y">2023 - A virada</span>
+            <h3 data-i18n="tl.i3t">ADM ➜ ADS</h3>
+            <p data-i18n="tl.i3p">Larguei Administração e comecei a faculdade de <strong>Análise e Desenvolvimento de Sistemas</strong>. Sem olhar pra trás.</p>
+          </div>
+
+          <div class="tl-item" style="--i:3">
+            <div class="tl-badge">🖥️</div>
+            <span class="tl-year hand">2024</span>
+            <h3 data-i18n="tl.i4t">Estágio em TI</h3>
+            <p data-i18n="tl.i4p">GTholding — suporte técnico, sistema WebPosto, primeiros códigos rodando no mundo real.</p>
+          </div>
+
+          <div class="tl-item" style="--i:4">
+            <div class="tl-badge">🚀</div>
+            <span class="tl-year hand">2025</span>
+            <h3 data-i18n="tl.i5t">Suporte ➜ Dev</h3>
+            <p data-i18n="tl.i5p">Formada em ADS e efetivada como <strong>Assistente de Desenvolvimento</strong>: web, apps, dashboards e IA.</p>
+          </div>
+
+          <div class="tl-item tl-item--now" style="--i:5">
+            <div class="tl-badge">✨</div>
+            <span class="tl-year hand" data-i18n="tl.i6y">now</span>
+            <h3 data-i18n="tl.i6t">Full Stack & IA</h3>
+            <p data-i18n="tl.i6p">Pós-graduação em andamento. Construindo produtos com <strong>visão computacional</strong> e reconhecimento facial.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 07 · O QUE EU FAÇO — títulos empilham (djectstudio) ══════════ -->
+    <section class="services" id="servicos">
+      <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="svc.tag">o que eu faço</span></div>
+      <div class="services__list">
+
+        <article class="service" style="--i:0">
+          <div class="service__num hand">01</div>
+          <div class="service__body">
+            <h3 data-i18n="svc.t1">Desenvolvimento Web Full Stack</h3>
+            <p data-i18n="svc.p1">Aplicações completas do banco de dados à interface — sites institucionais, sistemas internos, plataformas de gestão. Front elegante, back sólido.</p>
+            <div class="service__tags"><span>React</span><span>Angular</span><span>Node.js</span><span>PHP</span><span>PostgreSQL</span></div>
+          </div>
+        </article>
+
+        <article class="service" style="--i:1">
+          <div class="service__num hand">02</div>
+          <div class="service__body">
+            <h3 data-i18n="svc.t2">Desenvolvimento Mobile</h3>
+            <p data-i18n="svc.p2">Apps que as pessoas realmente usam: catálogos com QR Code, controle de estoque, saúde mental. Do protótipo à loja.</p>
+            <div class="service__tags"><span>React Native</span><span>Ionic</span><span>TypeScript</span></div>
+          </div>
+        </article>
+
+        <article class="service" style="--i:2">
+          <div class="service__num hand">03</div>
+          <div class="service__body">
+            <h3 data-i18n="svc.t3">Inteligência Artificial</h3>
+            <p data-i18n="svc.p3">Análise de dados, reconhecimento facial e visão computacional aplicados a problemas reais de negócio — não só demos bonitas.</p>
+            <div class="service__tags"><span>Python</span><span data-i18n="svc.tag3">Visão Computacional</span><span data-i18n="svc.tag3b">Análise de Dados</span></div>
+          </div>
+        </article>
+
+        <article class="service" style="--i:3">
+          <div class="service__num hand">04</div>
+          <div class="service__body">
+            <h3 data-i18n="svc.t4">Dashboards & Automação</h3>
+            <p data-i18n="svc.p4">Painéis em tempo real que transformam dados soltos em decisão: operações, vendas, indicadores. E automação para o trabalho repetitivo sumir.</p>
+            <div class="service__tags"><span>Power BI</span><span>Looker Studio</span><span>Python</span><span>APIs</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ══════════ 08 · PROJETOS — galeria clicável ══════════ -->
+    <section class="projects" id="projetos">
+      <div class="projects__head">
+        <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="prj.tag">projetos</span></div>
+        <h2 class="projects__title split-lines" data-i18n="prj.title">Clique num projeto<br/>pra ver de perto<span class="accent">.</span></h2>
+      </div>
+
+      <div class="projects__grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- ══════════ 09 · SKILLS ══════════ -->
+    <section class="skills" id="skills">
+      <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="sk.tag">habilidades</span></div>
+      <h2 class="skills__title split-lines" data-i18n="sk.title">Minha caixa<br/>de ferramentas<span class="accent">.</span></h2>
+      <p class="skills__hint hand reveal-up" data-i18n="sk.hint">passe o mouse pra descobrir cada uma ✦</p>
+      <div class="skills-float" id="skillsFloat"></div>
+    </section>
+
+    <!-- ══════════ 10 · EXPERIÊNCIA — boneco visão computacional (mantis.works) ══════════ -->
+    <section class="xp" id="experiencia">
+      <canvas id="poseCanvas" class="xp__canvas" aria-hidden="true"></canvas>
+      <div class="xp__inner">
+        <div class="section-tag section-tag--dark reveal-up"><span class="tag-dot"></span><span data-i18n="xp.tag">experiência profissional</span></div>
+        <h2 class="xp__title split-lines" data-i18n="xp.title">Onde eu aprendi<br/>fazendo<span class="accent">.</span></h2>
+
+        <div class="xp__list">
+          <article class="xp-card reveal-up">
+            <div class="xp-card__top"><h3 data-i18n="xp.t1">Assistente de Desenvolvimento</h3><span class="xp-card__when" data-i18n="xp.w1">set 2025 — atual</span></div>
+            <span class="xp-card__where">GTholding</span>
+            <p data-i18n="xp.p1">Desenvolvimento de software web, aplicativos, dashboards e projetos de IA para análise de dados e <strong>reconhecimento facial</strong>.</p>
+          </article>
+
+          <article class="xp-card reveal-up">
+            <div class="xp-card__top"><h3 data-i18n="xp.t2">Técnica de Suporte em TI</h3><span class="xp-card__when" data-i18n="xp.w2">fev 2025 — set 2025</span></div>
+            <span class="xp-card__where">GTholding</span>
+            <p data-i18n="xp.p2">Suporte via chat e telefone ao sistema WebPosto, correção de erros e criação de dashboards de análise.</p>
+          </article>
+
+          <article class="xp-card reveal-up">
+            <div class="xp-card__top"><h3 data-i18n="xp.t3">Estágio — Suporte de TI</h3><span class="xp-card__when" data-i18n="xp.w3">abr 2024 — fev 2025</span></div>
+            <span class="xp-card__where">GTholding</span>
+            <p data-i18n="xp.p3">Atendimento técnico e suporte ao sistema WebPosto. Primeiro contato profissional com tecnologia.</p>
+          </article>
+
+          <article class="xp-card reveal-up">
+            <div class="xp-card__top"><h3 data-i18n="xp.t4">Auxiliar de Escritório</h3><span class="xp-card__when" data-i18n="xp.w4">dez 2021 — abr 2024</span></div>
+            <span class="xp-card__where">Elevadores Alpha</span>
+            <p data-i18n="xp.p4">Homologação de equipamentos, cobrança, atendimento ao cliente e gerenciamento de banco de dados. Onde tudo começou.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 11 · CERTIFICAÇÕES ══════════ -->
+    <section class="certs" id="certificacoes">
+      <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="ct.tag">certificações</span></div>
+      <h2 class="certs__title split-lines" data-i18n="ct.title">Sempre estudando<span class="accent">.</span></h2>
+      <div class="certs__grid" id="certsGrid"></div>
+    </section>
+
+    <!-- ══════════ 12 · CONTATO ══════════ -->
+    <section class="contact" id="contato">
+      <p class="contact__hand hand reveal-up" data-i18n="cta.hand">gostou do que viu?</p>
+      <h2 class="contact__title"><a href="mailto:rayanneernandez@gmail.com" data-hover class="contact__mail split-lines" data-i18n="cta.title">Vamos construir<br/>algo juntos<span class="accent">.</span></a></h2>
+      <div class="contact__links reveal-up">
+        <a href="mailto:rayanneernandez@gmail.com" class="btn-line" data-hover>rayanneernandez@gmail.com <span class="btn-line__arrow">→</span></a>
+        <a href="https://wa.me/5521989191499" target="_blank" rel="noopener" class="btn-line" data-hover>WhatsApp <span class="btn-line__arrow">→</span></a>
+        <a href="https://www.linkedin.com/in/rayanne-ernandez-2a61ba221/" target="_blank" rel="noopener" class="btn-line" data-hover>LinkedIn <span class="btn-line__arrow">→</span></a>
+        <a href="https://github.com/rayanneernandez" target="_blank" rel="noopener" class="btn-line" data-hover>GitHub <span class="btn-line__arrow">→</span></a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════ MODAL de fotos do projeto ══════════ -->
+  <div class="pmodal" id="pmodal" aria-hidden="true">
+    <div class="pmodal__backdrop" data-close></div>
+    <div class="pmodal__box">
+      <button class="pmodal__close" data-close aria-label="Fechar" data-hover>✕</button>
+      <div class="pmodal__imgwrap">
+        <button class="pmodal__nav pmodal__nav--prev" id="pmPrev" aria-label="Foto anterior" data-hover>←</button>
+        <img id="pmImg" src="" alt="" />
+        <button class="pmodal__nav pmodal__nav--next" id="pmNext" aria-label="Próxima foto" data-hover>→</button>
+      </div>
+      <div class="pmodal__info">
+        <div class="pmodal__text">
+          <h3 id="pmName"></h3>
+          <p id="pmDesc"></p>
+          <div class="pmodal__tags" id="pmTags"></div>
+        </div>
+        <span class="pmodal__count" id="pmCount"></span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>© 2026 Rayanne Ernandez</span>
+    <span class="footer__mid hand" data-i18n="ft.mid">feito com café ☕ e código</span>
+    <span>Rio de Janeiro, BR</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/effects.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
