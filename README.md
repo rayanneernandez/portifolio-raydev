@@ -5,12 +5,18 @@ Portfólio pessoal com animações de scroll avançadas. 100% estático: HTML + 
 ## Estrutura
 
 ```
-index.html          → toda a estrutura das seções
-css/style.css       → design completo (tema, responsivo)
-js/data.js          → DADOS: projetos, certificações, imagens do marquee
+index.html          → toda a estrutura das seções (texto em português)
+css/style.css       → design completo (temas claro/noturno, responsivo)
+js/i18n.js          → traduções EN e ES (o PT é o texto do próprio HTML)
+js/data.js          → DADOS: projetos, certificações, imagens do marquee, skills
 js/effects.js       → efeitos de canvas (partículas, terminal, boneco de visão computacional)
-js/main.js          → animações de scroll (GSAP + Lenis), cursor, nav, loader
+js/main.js          → animações de scroll (GSAP + Lenis), cursor, nav, idioma, tema, loader
 ```
+
+## Idiomas e tema
+
+- **Idiomas**: botão 🌐 no topo → Português, English, Español. A escolha fica salva no navegador. Para ajustar traduções: `js/i18n.js` (textos do site) e campos `desc_en`/`desc_es` em `js/data.js` (projetos).
+- **Tema**: botão ☾/☀ alterna claro/noturno (salvo no navegador). As cores dos dois temas ficam nas variáveis do topo de `css/style.css`.
 
 ## Como editar o conteúdo
 
@@ -27,7 +33,7 @@ js/main.js          → animações de scroll (GSAP + Lenis), cursor, nav, loade
 | Hero | Partículas formando `</>` que se desfazem com o cursor e remontam | dobre.agency |
 | Frame 2 | Terminal digitando código que cresce até tela cheia e encaixa na frase | wearemotto.com |
 | Vitrine | Marquee duplo arrastável em direções opostas com bordas borradas | djectstudio.com |
-| Transição | Bola preta que expande, frases no escuro, e pousa no ponto final | djectstudio.com |
+| Transição | Símbolo @ que expande, frases no escuro, e pousa no ponto final | djectstudio.com |
 | Trajetória | Linha do tempo horizontal desenhada à mão, com título fixo | danielsun.space |
 | O que faço | Numeração 01–04; descrições entram/saem com o scroll | djectstudio.com |
 | Projetos | Galeria de cards — clique abre modal com as fotos do projeto | — |

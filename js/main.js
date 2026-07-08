@@ -8,6 +8,9 @@ let lenis;
 let scrollVel = 0; // velocidade do scroll (usada nos marquees)
 
 document.addEventListener('DOMContentLoaded', () => {
+  applyI18n();       // traduz o HTML antes de qualquer medição/split
+  initLang();
+  initTheme();
   initLenis();
   initCursor();
   initNav();
@@ -34,6 +37,46 @@ document.addEventListener('DOMContentLoaded', () => {
   // recalcula tudo depois que imagens carregarem
   window.addEventListener('load', () => ScrollTrigger.refresh());
 });
+
+/* ─── IDIOMA (botão + dropdown) ─── */
+function initLang() {
+  const wrap = document.getElementById('langSwitch');
+  const btn = document.getElementById('langBtn');
+  const cur = document.getElementById('langCur');
+  cur.textContent = LANG.toUpperCase();
+
+  wrap.querySelectorAll('.lang__menu button').forEach(b => {
+    b.classList.toggle('is-active', b.dataset.lang === LANG);
+    b.addEventListener('click', () => {
+      if (b.dataset.lang === LANG) { wrap.classList.remove('is-open'); return; }
+      try { localStorage.setItem('lang', b.dataset.lang); } catch (e) { }
+      location.reload(); // recarrega já no novo idioma (medições e efeitos recalculam)
+    });
+  });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = wrap.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target)) wrap.classList.remove('is-open');
+  });
+}
+
+/* ─── TEMA claro/noturno ─── */
+function initTheme() {
+  const apply = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    if (dark) delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = 'dark';
+    try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) { }
+  };
+  const b1 = document.getElementById('themeBtn');
+  const b2 = document.getElementById('themeBtnMobile');
+  if (b1) b1.addEventListener('click', apply);
+  if (b2) b2.addEventListener('click', apply);
+}
 
 /* ─── LENIS (scroll suave) ─── */
 function initLenis() {
@@ -113,6 +156,10 @@ function initNav() {
     burger.classList.toggle('is-open', open);
     if (open) lenis.stop(); else lenis.start();
   });
+
+  // X pra fechar o menu mobile
+  const close = document.getElementById('menuClose');
+  if (close) close.addEventListener('click', closeMenu);
 }
 function closeMenu() {
   const menu = document.getElementById('mobileMenu');
@@ -124,33 +171,9 @@ function closeMenu() {
   }
 }
 
-/* ─── LOADER → intro do hero ─── */
+/* ─── entrada direta no site (sem loader) ─── */
 function initLoader() {
-  const loader = document.getElementById('loader');
-  const num = document.getElementById('loaderNum');
-  const ball = document.getElementById('loaderBall');
-  lenis.stop();
-  window.scrollTo(0, 0);
-
-  const counter = { v: 0 };
-  const tl = gsap.timeline({
-    onComplete: () => {
-      loader.style.display = 'none';
-      lenis.start();
-    }
-  });
-
-  tl.to(counter, {
-    v: 100, duration: 1.5, ease: 'power2.inOut',
-    onUpdate: () => { num.textContent = Math.round(counter.v); }
-  })
-  .to('.loader__count, .loader__phrase', { opacity: 0, y: -26, duration: .4, ease: 'power2.in' })
-  .to(ball, {
-    scale: () => (Math.hypot(innerWidth, innerHeight) / 120) * 1.15,
-    duration: .9, ease: 'power3.inOut'
-  }, '-=.15')
-  .to(loader, { opacity: 0, duration: .35 })
-  .add(heroIntro(), '-=.5');
+  heroIntro();
 }
 
 function heroIntro() {
@@ -260,28 +283,32 @@ function initScaleSection() {
     .to({}, { duration: .08 });
 }
 
-/* ─── BOLA PRETA + frases (djectstudio) ─── */
+/* ─── SÍMBOLO @ + frases no escuro (djectstudio) ─── */
 function initBallSection() {
   const ball = document.getElementById('theBall');
+  const cover = document.getElementById('ballCover');
   const words = gsap.utils.toArray('.ball-word');
   const lineB = document.getElementById('ballLineB');
   const dot = document.getElementById('ballDot');
   const pin = document.querySelector('.ball-pin');
-  const coverScale = () => (Math.hypot(innerWidth, innerHeight) / 56) * 1.15;
 
-  // a bola termina pousando exatamente no ponto final da frase
-  const dock = { x: 0, y: 0, s: .3 };
+  // escala pro @ tomar a tela antes do escuro entrar
+  const bigScale = () => (Math.max(innerWidth, innerHeight) / 120) * 2.2;
+
+  // o @ termina pousando exatamente no ponto final da frase
+  const dock = { x: 0, y: 0, s: .18 };
   function measureBallDock() {
     const pinR = pin.getBoundingClientRect();
     const dotR = dot.getBoundingClientRect();
-    const size = Math.max(10, Math.min(dotR.width * 1.1, 40));
-    dock.s = size / 56;
+    dock.s = Math.max(11, Math.min(dotR.width * 0.9, 30)) / 120; /* círculo do tamanho do ponto final */
     dock.x = (dotR.left + dotR.width / 2) - (pinR.left + pinR.width / 2);
     // o "." fica na base da linha de texto, não no meio da caixa
-    dock.y = (dotR.top + dotR.height * 0.82) - (pinR.top + pinR.height / 2);
+    dock.y = (dotR.top + dotR.height * 0.78) - (pinR.top + pinR.height / 2);
   }
   measureBallDock();
   ScrollTrigger.addEventListener('refreshInit', measureBallDock);
+
+  gsap.set(ball, { xPercent: -50, yPercent: -50 });
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -293,9 +320,12 @@ function initBallSection() {
     }
   });
 
-  tl.fromTo(ball, { scale: .18 }, { scale: 1.6, duration: .1, ease: 'none' })
+  tl.fromTo(ball, { scale: .3, autoAlpha: 0, rotation: -12 }, { scale: 1, autoAlpha: 1, rotation: 0, duration: .1, ease: 'none' })
     .to('#ballLineA', { opacity: 0, scale: .92, duration: .08, ease: 'none' }, '<.04')
-    .to(ball, { scale: coverScale, duration: .2, ease: 'none' })
+    // o @ cresce até dominar a tela...
+    .to(ball, { scale: bigScale, rotation: 10, duration: .22, ease: 'none' })
+    // ...e o escuro toma conta
+    .to(cover, { opacity: 1, duration: .09, ease: 'none' }, '-=.1')
     // frases no escuro
     .fromTo(words[0], { opacity: 0, yPercent: 40 }, { opacity: 1, yPercent: 0, duration: .08, ease: 'none' })
     .to(words[0], { opacity: 0, yPercent: -40, duration: .08, ease: 'none' }, '+=.05')
@@ -303,16 +333,20 @@ function initBallSection() {
     .to(words[1], { opacity: 0, yPercent: -40, duration: .08, ease: 'none' }, '+=.05')
     .fromTo(words[2], { opacity: 0, yPercent: 40 }, { opacity: 1, yPercent: 0, duration: .08, ease: 'none' })
     .to(words[2], { opacity: 0, yPercent: -40, duration: .08, ease: 'none' }, '+=.05')
-    // bola volta e vira o ponto final da frase
-    .fromTo(lineB, { opacity: 0 }, { opacity: 1, duration: .1, ease: 'none' }, '+=.02')
+    // o escuro sai, o @ encolhe e pousa como ponto final da frase
+    .to(cover, { opacity: 0, duration: .1, ease: 'none' }, '+=.02')
+    .fromTo(lineB, { opacity: 0 }, { opacity: 1, duration: .1, ease: 'none' }, '<')
     .to(ball, {
       scale: () => dock.s,
       x: () => dock.x,
       y: () => dock.y,
-      backgroundColor: '#6c4df6',
+      rotation: 0,
+      backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6c4df6',
       duration: .18, ease: 'none'
     }, '<')
-    .to({}, { duration: .06 });
+    .to(ball, { autoAlpha: 0, duration: .03, ease: 'none' })
+    .to(dot, { opacity: 1, duration: .03, ease: 'none' }, '<')
+    .to({}, { duration: .05 });
 }
 
 /* ─── TIMELINE horizontal + linha desenhada (danielsun) ─── */
@@ -468,7 +502,7 @@ function buildProjects() {
            onerror="this.parentElement.classList.add('g-card--fallback'); this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${p.name.split('—')[0].replace(/'/g, '').trim()}'}))" />
       <div class="g-card__overlay">
         <h3>${p.name}</h3>
-        <span class="g-card__photos">📷 ${p.images.length} ${p.images.length > 1 ? 'fotos' : 'foto'}</span>
+        <span class="g-card__photos">📷 ${p.images.length} ${p.images.length > 1 ? t('ui.photos') : t('ui.photo')}</span>
       </div>
     </article>`).join('');
 
@@ -498,7 +532,8 @@ function openModal(idx) {
   pmProject = PROJECTS[idx];
   if (!pmProject) return;
   document.getElementById('pmName').textContent = pmProject.name;
-  document.getElementById('pmDesc').textContent = pmProject.desc;
+  document.getElementById('pmDesc').textContent =
+    (LANG === 'en' && pmProject.desc_en) || (LANG === 'es' && pmProject.desc_es) || pmProject.desc;
   document.getElementById('pmTags').innerHTML = pmProject.tags.map(t => `<span>${t}</span>`).join('');
   showPhoto(0);
   document.getElementById('pmodal').classList.add('is-open');
@@ -528,11 +563,11 @@ function buildCerts() {
     <div class="cert-ticket ${c.soon ? 'cert-ticket--soon' : ''} reveal-up" data-hover>
       <div class="cert-ticket__band"><span>${c.year}</span></div>
       <div class="cert-ticket__body">
-        <span class="cert-ticket__num">certificado nº ${String(i + 1).padStart(2, '0')}</span>
+        <span class="cert-ticket__num">${t('ui.certNo')} ${String(i + 1).padStart(2, '0')}</span>
         <h3>${c.name}</h3>
         <p class="cert-ticket__inst">${c.inst}</p>
-        ${c.link ? `<a class="cert-ticket__link" href="${c.link}" target="_blank" rel="noopener">ver certificado ↗</a>` : ''}
-        ${c.soon ? '<span class="cert-ticket__badge">cursando agora</span>' : ''}
+        ${c.link ? `<a class="cert-ticket__link" href="${c.link}" target="_blank" rel="noopener">${t('ui.viewCert')}</a>` : ''}
+        ${c.soon ? `<span class="cert-ticket__badge">${t('ui.studying')}</span>` : ''}
       </div>
     </div>`).join('');
 }

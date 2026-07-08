@@ -177,12 +177,23 @@ FX.initParticles = function () {
 
       const moving = Math.abs(p.vx) + Math.abs(p.vy) > 1.6;
       ctx.fillStyle = moving
-        ? 'rgba(108, 77, 246, .85)'
-        : (p.tone > 0.86 ? 'rgba(108, 77, 246, .55)' : 'rgba(17, 17, 16, .5)');
+        ? accentCol
+        : (p.tone > 0.86 ? accentSoftCol : baseCol);
       ctx.fillRect(p.x, p.y, p.size, p.size);
     }
     requestAnimationFrame(tick);
   }
+
+  // cores acompanham o tema claro/noturno
+  let baseCol, accentCol, accentSoftCol;
+  function themeColors() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    baseCol = dark ? 'rgba(242, 241, 236, .55)' : 'rgba(17, 17, 16, .5)';
+    accentCol = dark ? 'rgba(139, 112, 255, .9)' : 'rgba(108, 77, 246, .85)';
+    accentSoftCol = dark ? 'rgba(139, 112, 255, .6)' : 'rgba(108, 77, 246, .55)';
+  }
+  themeColors();
+  new MutationObserver(themeColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
   window.addEventListener('mousemove', e => {
     const rect = canvas.getBoundingClientRect();

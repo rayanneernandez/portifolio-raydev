@@ -26,13 +26,6 @@
 </head>
 <body>
 
-  <!-- ══════════ LOADER ══════════ -->
-  <div class="loader" id="loader">
-    <div class="loader__count"><span id="loaderNum">0</span>%</div>
-    <div class="loader__phrase" data-i18n="loader.phrase">construindo do zero...</div>
-    <div class="loader__ball" id="loaderBall"></div>
-  </div>
-
   <!-- ══════════ CURSOR ══════════ -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -49,10 +42,17 @@
       <a href="#certificacoes" data-hover data-i18n="nav.certificacoes">Certificações</a>
     </nav>
     <div class="nav__ctrl">
-      <div class="lang" id="langSwitch" role="group" aria-label="Idioma">
-        <button data-lang="pt" data-hover>PT</button>
-        <button data-lang="en" data-hover>EN</button>
-        <button data-lang="es" data-hover>ES</button>
+      <div class="lang" id="langSwitch">
+        <button class="lang__btn" id="langBtn" aria-haspopup="true" aria-expanded="false" data-hover>
+          <svg class="lang__globe" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.6 4 5.7 4 9s-1.2 6.4-4 9c-2.8-2.6-4-5.7-4-9s1.2-6.4 4-9z"/></svg>
+          <span id="langCur">PT</span>
+          <span class="lang__caret">▾</span>
+        </button>
+        <div class="lang__menu" id="langMenu">
+          <button data-lang="pt" data-hover><span class="lang__flag">🇧🇷</span> Português</button>
+          <button data-lang="en" data-hover><span class="lang__flag">🇺🇸</span> English</button>
+          <button data-lang="es" data-hover><span class="lang__flag">🇪🇸</span> Español</button>
+        </div>
       </div>
       <button class="theme-btn" id="themeBtn" aria-label="Alternar tema" data-hover>
         <span class="theme-btn__sun">☀</span><span class="theme-btn__moon">☾</span>
@@ -66,6 +66,7 @@
 
   <!-- menu mobile -->
   <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu__close" id="menuClose" aria-label="Fechar menu">✕</button>
     <a href="#sobre" data-i18n="nav.sobre">Sobre</a>
     <a href="#trajetoria" data-i18n="nav.trajetoria">Trajetória</a>
     <a href="#projetos" data-i18n="nav.projetos">Projetos</a>
@@ -73,6 +74,10 @@
     <a href="#experiencia" data-i18n="nav.experiencia">Experiência</a>
     <a href="#certificacoes" data-i18n="nav.certificacoes">Certificações</a>
     <a href="#contato" data-i18n="nav.contato">Contato</a>
+    <button class="theme-btn theme-btn--menu" id="themeBtnMobile" data-hover>
+      <span class="theme-btn__sun">☀</span><span class="theme-btn__moon">☾</span>
+      <em data-i18n="ui.themeLabel">mudar tema</em>
+    </button>
   </div>
 
   <main>
@@ -155,7 +160,7 @@
     <section class="ball-sec" id="ballSec">
       <div class="ball-pin">
         <h2 class="ball-line ball-line--a" id="ballLineA" data-i18n="ball.a">Construir do zero.</h2>
-        <div class="ball" id="theBall" aria-hidden="true">{&nbsp;}</div>
+        <div class="ball" id="theBall" aria-hidden="true"><span>&lt;/&gt;</span></div>
         <div class="ball-cover" id="ballCover"></div>
         <div class="ball-words">
           <h2 class="ball-word" data-word="0" data-i18n="ball.w1">Criar<span class="accent">.</span></h2>
