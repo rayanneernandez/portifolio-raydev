@@ -26,6 +26,13 @@
 </head>
 <body>
 
+  <!-- ══════════ LOADER ══════════ -->
+  <div class="loader" id="loader">
+    <div class="loader__count"><span id="loaderNum">0</span>%</div>
+    <div class="loader__phrase" data-i18n="loader.phrase">construindo do zero...</div>
+    <div class="loader__ball" id="loaderBall"></div>
+  </div>
+
   <!-- ══════════ CURSOR ══════════ -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -86,7 +93,7 @@
     <section class="hero" id="hero">
       <canvas id="particleCanvas" class="hero__canvas"></canvas>
       <div class="hero__content">
-        <p class="hero__hello reveal-up" data-i18n="hero.hello">Olá, eu sou a</p>
+        <p class="hero__hello reveal-up" data-i18n="hero.hello">Olá, sou </p>
         <h1 class="hero__name">
           <span class="hero__line"><span class="hero__word">Rayanne</span></span>
           <span class="hero__line"><span class="hero__word">Ernandez<span class="accent">.</span></span></span>
@@ -145,7 +152,7 @@
         <div class="about__text">
           <p class="about__big split-lines" data-i18n="about.big">Minha história com código não começou programando e sim começou num <em>escritório de elevadores</em>.</p>
           <p class="reveal-up" data-i18n="about.p1">Eu trabalhava no setor administrativo enquanto cursava Administração. Até que me pediram para criar o manual de um sistema interno e ali descobri minha verdadeira paixão: <strong>construir do zero, criar, inovar, desenvolver</strong>.</p>
-          <p class="reveal-up" data-i18n="about.p2">Larguei ADM, me formei em <strong>Análise e Desenvolvimento de Sistemas</strong> e hoje trabalho com desenvolvimento web, mobile, dashboards, projetos de <strong>Inteligência Artificial</strong> e automação de processos.</p>
+          <p class="reveal-up" data-i18n="about.p2">Larguei ADM, me formei em <strong>Análise e Desenvolvimento de Sistemas</strong> e hoje curso minha pós graduação em ciência de dados e IA e trabalho com desenvolvimento web, mobile, dashboards, projetos de <strong>Inteligência Artificial</strong> e automação de processos.</p>
         </div>
         <div class="about__stats">
           <div class="stat reveal-up"><span class="stat__num" data-count="3">0</span><span class="stat__plus">+</span><span class="stat__label" data-i18n="about.s1">anos na área</span></div>
@@ -160,7 +167,7 @@
     <section class="ball-sec" id="ballSec">
       <div class="ball-pin">
         <h2 class="ball-line ball-line--a" id="ballLineA" data-i18n="ball.a">Construir do zero.</h2>
-        <div class="ball" id="theBall" aria-hidden="true"><span>&lt;/&gt;</span></div>
+        <div class="ball" id="theBall" aria-hidden="true">{&nbsp;}</div>
         <div class="ball-cover" id="ballCover"></div>
         <div class="ball-words">
           <h2 class="ball-word" data-word="0" data-i18n="ball.w1">Criar<span class="accent">.</span></h2>
@@ -192,7 +199,7 @@
 
           <div class="tl-item" style="--i:1">
             <div class="tl-badge">💡</div>
-            <span class="tl-year hand" data-i18n="tl.i2y">o clique</span>
+            <span class="tl-year hand" data-i18n="tl.i2y">2022 - O clique</span>
             <h3 data-i18n="tl.i2t">O manual que mudou tudo</h3>
             <p data-i18n="tl.i2p">Me pediram um manual de sistema interno. Descobri que eu amava <strong>construir</strong> me interessante em como era por trás e que ADM não era meu caminho.</p>
           </div>

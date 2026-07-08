@@ -71,6 +71,7 @@ function initTheme() {
     if (dark) delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = 'dark';
     try { localStorage.setItem('theme', dark ? 'light' : 'dark'); } catch (e) { }
+    ScrollTrigger.refresh(); // re-registra cores/medidas dos tweens no novo tema
   };
   const b1 = document.getElementById('themeBtn');
   const b2 = document.getElementById('themeBtnMobile');

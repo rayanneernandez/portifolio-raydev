@@ -345,7 +345,9 @@ section { position: relative; }
   font-family: var(--head); font-weight: 700; font-size: 46px; line-height: 1;
   color: #fff; letter-spacing: -0.03em;
 }
-[data-theme="dark"] .ball { box-shadow: 0 0 0 1.5px rgba(245, 244, 240, .22); } /* contorno visível no escuro */
+/* no modo noturno inverte: círculo branco, símbolo preto */
+[data-theme="dark"] .ball { background: var(--ink); }
+[data-theme="dark"] .ball span { color: var(--dark); }
 .ball-cover {
   position: absolute; inset: 0; z-index: 2;
   background: var(--dark); opacity: 0; pointer-events: none;
