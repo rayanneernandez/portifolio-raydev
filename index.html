@@ -26,13 +26,6 @@
 </head>
 <body>
 
-  <!-- ══════════ LOADER ══════════ -->
-  <div class="loader" id="loader">
-    <div class="loader__count"><span id="loaderNum">0</span>%</div>
-    <div class="loader__phrase" data-i18n="loader.phrase">construindo do zero...</div>
-    <div class="loader__ball" id="loaderBall"></div>
-  </div>
-
   <!-- ══════════ CURSOR ══════════ -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -167,7 +160,7 @@
     <section class="ball-sec" id="ballSec">
       <div class="ball-pin">
         <h2 class="ball-line ball-line--a" id="ballLineA" data-i18n="ball.a">Construir do zero.</h2>
-        <div class="ball" id="theBall" aria-hidden="true">{&nbsp;}</div>
+        <div class="ball" id="theBall" aria-hidden="true"><span>&lt;/&gt;</span></div>
         <div class="ball-cover" id="ballCover"></div>
         <div class="ball-words">
           <h2 class="ball-word" data-word="0" data-i18n="ball.w1">Criar<span class="accent">.</span></h2>
