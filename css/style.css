@@ -250,7 +250,7 @@ section { position: relative; }
 @keyframes scrollDrop { 0% { top: -50% } 100% { top: 110% } }
 
 /* ══════════ SCALE / VÍDEO DE CÓDIGO ══════════ */
-.scale-sec { height: 320vh; }
+.scale-sec { height: 220vh; }
 .scale-pin {
   position: sticky; top: 0; height: 100vh; height: 100svh;
   overflow: hidden;
@@ -384,7 +384,7 @@ section { position: relative; }
   width: max-content; position: relative;
 }
 .timeline__path { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
-.timeline__path path { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.timeline__path path { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; opacity: .38; }
 .tl-item { position: relative; width: clamp(240px, 26vw, 330px); flex: 0 0 auto; }
 .tl-item:nth-child(odd of .tl-item) { transform: translateY(-34px); }
 .tl-item:nth-child(even of .tl-item) { transform: translateY(44px); }
@@ -732,7 +732,7 @@ section { position: relative; }
 }
 
 @media (max-width: 640px) {
-  .scale-sec { height: 260vh; }
+  .scale-sec { height: 180vh; }
   .ball-sec { height: 340vh; }
   .m-card { width: 240px; }
   .stat { padding: 20px 16px; }

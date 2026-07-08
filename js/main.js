@@ -323,8 +323,10 @@ function initBallSection() {
 
   tl.fromTo(ball, { scale: .3, autoAlpha: 0, rotation: -12 }, { scale: 1, autoAlpha: 1, rotation: 0, duration: .1, ease: 'none' })
     .to('#ballLineA', { opacity: 0, scale: .92, duration: .08, ease: 'none' }, '<.04')
-    // o @ cresce até dominar a tela...
+    // o círculo cresce até dominar a tela...
     .to(ball, { scale: bigScale, rotation: 10, duration: .22, ease: 'none' })
+    // ...o símbolo some cedo pra não ficar desfocado no tamanho gigante
+    .to(ball.querySelector('span'), { opacity: 0, duration: .04, ease: 'none' }, '<+.03')
     // ...e o escuro toma conta
     .to(cover, { opacity: 1, duration: .09, ease: 'none' }, '-=.1')
     // frases no escuro
@@ -368,7 +370,8 @@ function initTimeline() {
     const pts = [];
     track.querySelectorAll('.tl-badge').forEach(b => {
       const r = b.getBoundingClientRect();
-      pts.push({ x: r.left - trackR.left + r.width / 2, y: r.top - trackR.top + r.height + 26 });
+      // a linha passa pelo centro das bolinhas (por trás), longe dos textos
+      pts.push({ x: r.left - trackR.left + r.width / 2, y: r.top - trackR.top + r.height / 2 });
     });
     if (pts.length < 2) return;
 
@@ -503,7 +506,7 @@ function buildProjects() {
            onerror="this.parentElement.classList.add('g-card--fallback'); this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${p.name.split('—')[0].replace(/'/g, '').trim()}'}))" />
       <div class="g-card__overlay">
         <h3>${p.name}</h3>
-        <span class="g-card__photos">📷 ${p.images.length} ${p.images.length > 1 ? t('ui.photos') : t('ui.photo')}</span>
+        <span class="g-card__photos"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> ${p.images.length} ${p.images.length > 1 ? t('ui.photos') : t('ui.photo')}</span>
       </div>
     </article>`).join('');
 

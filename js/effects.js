@@ -34,9 +34,12 @@ FX.initParticles = function () {
   function glyphLayout(small) {
     const main = { text: '</>', x: .5, y: .44, size: Math.min(W * (small ? .34 : .26), H * .5), gap: small ? 5 : 4, amp: 4 };
     if (small) {
+      // no celular: símbolos maiores e nos cantos, longe do nome
       return [main,
-        { text: '{ }', x: .16, y: .16, size: W * .13, gap: 3, amp: 9 },
-        { text: ';', x: .86, y: .8, size: W * .16, gap: 3, amp: 10 },
+        { text: '{ }', x: .17, y: .16, size: W * .18, gap: 3, amp: 9 },
+        { text: ';', x: .85, y: .21, size: W * .2, gap: 3, amp: 10 },
+        { text: '( )', x: .18, y: .8, size: W * .15, gap: 3, amp: 8 },
+        { text: '=>', x: .8, y: .78, size: W * .16, gap: 3, amp: 11 },
       ];
     }
     return [main,
@@ -88,6 +91,7 @@ FX.initParticles = function () {
     const targets = [];
     glyphs.forEach((g, gid) => sampleGlyph(g, gid, targets));
 
+    const small = W < 700;
     particles = targets.map(t => ({
       x: Math.random() * W,
       y: Math.random() * H,
@@ -97,7 +101,7 @@ FX.initParticles = function () {
       amp: t.amp,
       vx: 0,
       vy: 0,
-      size: Math.random() * 1.4 + 0.8,
+      size: small ? Math.random() * 1.6 + 1.2 : Math.random() * 1.4 + 0.8,
       tone: Math.random(),
     }));
   }
