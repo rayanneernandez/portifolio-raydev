@@ -116,24 +116,20 @@ function initLenis() {
 /* ─── CURSOR bolinha ─── */
 function initCursor() {
   const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
   if (matchMedia('(pointer: coarse)').matches) return;
 
-  let mx = -100, my = -100, rx = -100, ry = -100;
+  let mx = -100, my = -100;
   window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
   gsap.ticker.add(() => {
-    rx += (mx - rx) * 0.16;
-    ry += (my - ry) * 0.16;
     dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
   });
 
   document.addEventListener('mouseover', e => {
-    if (e.target.closest('a, button, .g-card, .m-card, .sk-bubble, [data-hover]')) ring.classList.add('is-hover');
+    if (e.target.closest('a, button, .g-card, .m-card, .sk-bubble, [data-hover]')) dot.classList.add('is-hover');
   });
   document.addEventListener('mouseout', e => {
-    if (e.target.closest('a, button, .g-card, .m-card, .sk-bubble, [data-hover]')) ring.classList.remove('is-hover');
+    if (e.target.closest('a, button, .g-card, .m-card, .sk-bubble, [data-hover]')) dot.classList.remove('is-hover');
   });
 }
 

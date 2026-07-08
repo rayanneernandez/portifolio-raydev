@@ -61,25 +61,17 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 section { position: relative; }
 
-/* ─── cursor ─── */
-.cursor-dot, .cursor-ring {
+/* ─── cursor (uma bolinha só) ─── */
+.cursor-dot {
   position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
   border-radius: 50%; will-change: transform;
-}
-.cursor-dot {
-  width: 10px; height: 10px; background: var(--ink);
-  transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
   mix-blend-mode: difference; background: #fff;
+  transition: width .25s ease, height .25s ease;
 }
-.cursor-ring {
-  width: 38px; height: 38px; border: 1.5px solid #fff;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  transition: width .3s ease, height .3s ease, opacity .3s ease;
-}
-.cursor-ring.is-hover { width: 64px; height: 64px; }
+.cursor-dot.is-hover { width: 34px; height: 34px; }
 @media (hover: none), (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
+  .cursor-dot { display: none; }
 }
 
 /* ─── fade de navegação (pulo rápido pelas âncoras) ─── */
@@ -105,7 +97,11 @@ section { position: relative; }
 }
 .nav.is-hidden { transform: translateY(-110%); }
 .nav__logo { font-family: var(--head); font-weight: 700; font-size: 1.35rem; letter-spacing: -0.03em; }
-.nav__links { display: flex; gap: 28px; }
+.nav__links {
+  display: flex; gap: 28px;
+  /* centralizado na tela, alinhado com o nome do hero */
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
 .nav__links a {
   font-size: .88rem; font-weight: 500; color: var(--ink-soft); position: relative;
   transition: color .25s;
@@ -706,13 +702,17 @@ section { position: relative; }
 .split-lines .sl-inner { display: block; transform: translateY(110%); }
 
 /* ══════════ RESPONSIVO ══════════ */
-@media (max-width: 1000px) {
+@media (max-width: 1150px) {
+  /* nav centralizado precisa de espaço; abaixo disso vira menu hambúrguer */
   .nav__links { display: none; }
   .nav__cta { display: none; }
   .theme-btn:not(.theme-btn--menu) { display: none; } /* no celular o tema fica dentro do menu */
   .nav__ctrl { gap: 10px; }
   .lang__btn { padding: 7px 11px; }
   .nav__burger { display: flex; }
+}
+
+@media (max-width: 1000px) {
   .about__grid { grid-template-columns: 1fr; }
   .service { grid-template-columns: 90px 1fr; gap: 20px; }
   .service__num { position: static; font-size: 2.6rem; }
