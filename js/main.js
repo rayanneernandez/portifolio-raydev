@@ -4,6 +4,10 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// no celular, a barra de endereço muda a altura da tela o tempo todo —
+// sem isso, cada mudança recalcula o layout inteiro e os itens "pulam"
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 let lenis;
 let scrollVel = 0; // velocidade do scroll (usada nos marquees)
 
@@ -42,11 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
 
-  // no celular, a barra de endereço muda a altura da tela ao rolar —
-  // re-mede as posições quando isso acontece (com debounce pra não travar)
+  // re-mede só quando a LARGURA muda (girar o celular, redimensionar janela);
+  // mudanças de altura são a barra de endereço e não afetam as medidas
   if (window.visualViewport) {
     let vvTimer;
+    let lastW = window.visualViewport.width;
     window.visualViewport.addEventListener('resize', () => {
+      if (Math.abs(window.visualViewport.width - lastW) < 2) return;
+      lastW = window.visualViewport.width;
       clearTimeout(vvTimer);
       vvTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
     });
@@ -596,7 +603,7 @@ function buildSkillsFloat() {
     const dur = (4 + (i % 5) * 0.7).toFixed(1);
     const del = ((i * 0.37) % 2.2).toFixed(2);
     const icon = s.slug
-      ? `<img src="https://cdn.simpleicons.org/${s.slug}/${s.color}" alt="${s.name}"
+      ? `<img src="img/icons/${s.slug}.svg" alt="${s.name}"
              onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'sk-bubble__fb',textContent:'${(s.fallback || s.name[0]).replace(/'/g, '')}'}))" />`
       : `<span class="sk-bubble__fb" style="--fbcolor:#${s.color}">${s.fallback}</span>`;
     return `
