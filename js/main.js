@@ -36,6 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // recalcula tudo depois que imagens carregarem
   window.addEventListener('load', () => ScrollTrigger.refresh());
+
+  // recalcula quando as fontes carregam (o texto re-quebra as linhas)
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }
+
+  // no celular, a barra de endereço muda a altura da tela ao rolar —
+  // re-mede as posições quando isso acontece (com debounce pra não travar)
+  if (window.visualViewport) {
+    let vvTimer;
+    window.visualViewport.addEventListener('resize', () => {
+      clearTimeout(vvTimer);
+      vvTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
+    });
+  }
 });
 
 /* ─── IDIOMA (botão + dropdown) ─── */
@@ -240,11 +255,13 @@ function initScaleSection() {
   const dock = { x: 0, y: 0, s: 0.12 };
 
   function measureDock() {
-    // largura do slot proporcional à tela (pra mídia encaixar sem distorcer)
-    const slotH = parseFloat(getComputedStyle(slot).height) || 40;
-    slot.style.width = (slotH * (innerWidth / innerHeight)) + 'px';
-
+    // usa as medidas do PIN (e não innerWidth/innerHeight, que muda com a
+    // barra de endereço do celular) — a mídia preenche o pin, então a
+    // proporção certa do slot é a do próprio pin
     const pinR = pin.getBoundingClientRect();
+    const slotH = parseFloat(getComputedStyle(slot).height) || 40;
+    slot.style.width = (slotH * (pinR.width / Math.max(1, pinR.height))) + 'px';
+
     const slotR = slot.getBoundingClientRect();
     dock.s = slotR.height / pinR.height;
     dock.x = (slotR.left + slotR.width / 2) - (pinR.left + pinR.width / 2);
