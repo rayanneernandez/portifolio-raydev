@@ -270,14 +270,15 @@ function initScaleSection() {
     slot.style.width = (slotH * (pinR.width / Math.max(1, pinR.height))) + 'px';
 
     const slotR = slot.getBoundingClientRect();
-    dock.s = slotR.height / pinR.height;
+    dock.s = slotR.height / Math.max(1, pinR.height);
     dock.x = (slotR.left + slotR.width / 2) - (pinR.left + pinR.width / 2);
     dock.y = (slotR.top + slotR.height / 2) - (pinR.top + pinR.height / 2);
   }
   measureDock();
   ScrollTrigger.addEventListener('refreshInit', measureDock);
 
-  gsap.set(media, { scale: 0.34, borderRadius: 24 });
+  // começa um pouco abaixo do centro pra nunca encostar no título
+  gsap.set(media, { scale: 0.32, y: '9vh', borderRadius: 24 });
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -289,8 +290,8 @@ function initScaleSection() {
     }
   });
 
-  tl.to(heading, { opacity: 0, scale: .82, duration: .2, ease: 'none' }, 0)
-    .to(media, { scale: 1, borderRadius: 0, duration: .38, ease: 'none' }, 0)
+  tl.to(heading, { opacity: 0, y: -40, duration: .09, ease: 'none' }, 0)
+    .to(media, { scale: 1, y: 0, borderRadius: 0, duration: .38, ease: 'none' }, 0)
     .to({}, { duration: .14 }) // segura em tela cheia
     .add('dock')
     .to(media, {

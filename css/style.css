@@ -254,7 +254,9 @@ section { position: relative; }
 }
 .scale-heading {
   position: absolute; z-index: 1; text-align: center;
-  font-size: clamp(2.6rem, 8vw, 6.5rem); font-weight: 700; letter-spacing: -0.04em;
+  /* fica no topo, fora da área do terminal — nunca atrás dele */
+  left: 0; width: 100%; top: clamp(84px, 13vh, 150px);
+  font-size: clamp(2.4rem, 7vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em;
   color: var(--ink); line-height: .95;
 }
 .scale-media {
