@@ -33,6 +33,7 @@
   <header class="nav" id="nav">
     <a href="#hero" class="nav__logo" data-hover>R<span class="accent">.</span>E</a>
     <nav class="nav__links">
+      <a href="#facelab" data-hover data-i18n="nav.lab">Lab IA</a>
       <a href="#sobre" data-hover data-i18n="nav.sobre">Sobre</a>
       <a href="#trajetoria" data-hover data-i18n="nav.trajetoria">Trajetória</a>
       <a href="#projetos" data-hover data-i18n="nav.projetos">Projetos</a>
@@ -66,6 +67,7 @@
   <!-- menu mobile -->
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-menu__close" id="menuClose" aria-label="Fechar menu">✕</button>
+    <a href="#facelab" data-i18n="nav.lab">Lab IA</a>
     <a href="#sobre" data-i18n="nav.sobre">Sobre</a>
     <a href="#trajetoria" data-i18n="nav.trajetoria">Trajetória</a>
     <a href="#projetos" data-i18n="nav.projetos">Projetos</a>
@@ -122,7 +124,130 @@
       </div>
     </section>
 
-    <!-- ══════════ 03 · VITRINE — marquee arrastável (djectstudio) ══════════ -->
+    <!-- ══════════ 03 · FACE LAB — análise facial em tempo real (visão computacional) ══════════ -->
+    <section class="facelab" id="facelab">
+      <div class="facelab__head">
+        <div class="section-tag section-tag--dark reveal-up"><span class="tag-dot"></span><span data-i18n="fl.tag">visão computacional · ao vivo</span></div>
+        <h2 class="facelab__title split-lines" data-i18n="fl.title">Análise facial<br/>em tempo real<span class="accent">.</span></h2>
+      </div>
+
+      <div class="facelab__grid">
+
+        <!-- LADO ESQUERDO · câmera -->
+        <div class="fl-stage reveal-up">
+          <div class="fl-cam" id="flCam">
+            <video id="flVideo" class="fl-cam__video" playsinline muted></video>
+            <canvas id="flOverlay" class="fl-cam__overlay"></canvas>
+
+            <!-- moldura + cantos -->
+            <span class="fl-corner fl-corner--tl"></span>
+            <span class="fl-corner fl-corner--tr"></span>
+            <span class="fl-corner fl-corner--bl"></span>
+            <span class="fl-corner fl-corner--br"></span>
+            <div class="fl-scanline" id="flScanline"></div>
+
+            <!-- selo de status -->
+            <div class="fl-badge" id="flBadge">
+              <span class="fl-badge__pulse"></span>
+              <span id="flBadgeTxt" data-i18n="fl.scanning">AI Scanning…</span>
+            </div>
+
+            <!-- estado inicial (pedir câmera) -->
+            <div class="fl-idle" id="flIdle">
+              <div class="fl-idle__icon">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+              </div>
+              <h3 data-i18n="fl.idleTitle">Ativar a análise ao vivo</h3>
+              <p data-i18n="fl.idleText">Preciso da sua câmera pra rodar a visão computacional. O vídeo <strong>fica 100% no seu navegador</strong> — nada é enviado nem gravado.</p>
+              <button class="fl-start" id="flStart" data-hover>
+                <span data-i18n="fl.start">Ativar câmera</span>
+                <span class="fl-start__arrow">→</span>
+              </button>
+              <span class="fl-idle__hint" data-i18n="fl.privacy">🔒 privado · processado no dispositivo</span>
+            </div>
+
+            <!-- erro / sem câmera -->
+            <div class="fl-error" id="flError">
+              <h3 data-i18n="fl.errTitle">Não consegui acessar a câmera</h3>
+              <p id="flErrorMsg" data-i18n="fl.errText">Verifique a permissão do navegador e tente de novo.</p>
+              <button class="fl-start fl-start--ghost" id="flRetry" data-hover><span data-i18n="fl.retry">Tentar de novo</span></button>
+            </div>
+          </div>
+
+          <div class="fl-stage__foot">
+            <span class="fl-chip" id="flFps">— FPS</span>
+            <span class="fl-chip" id="flEngine" data-i18n="fl.engine">MediaPipe · Face + Hands</span>
+            <button class="fl-chip fl-chip--btn" id="flStop" hidden data-hover data-i18n="fl.stop">parar câmera</button>
+          </div>
+        </div>
+
+        <!-- LADO DIREITO · dashboard analítico -->
+        <div class="fl-dash reveal-up">
+          <div class="fl-panel">
+            <div class="fl-panel__bar">
+              <span class="fl-panel__title" data-i18n="fl.panel">painel de análise</span>
+              <span class="fl-panel__live"><i class="fl-live-dot"></i><span id="flFps">—</span></span>
+            </div>
+
+            <!-- 01 · Expressões -->
+            <section class="fl-block">
+              <header class="fl-block__h"><span class="fl-block__ix">01</span><span data-i18n="fl.exp">Expressões</span></header>
+              <div class="fl-readout">
+                <span class="fl-readout__lbl" data-i18n="fl.mainEmotion">emoção predominante</span>
+                <span class="fl-readout__val"><i class="fl-emo-dot" id="flEmoDot"></i><span id="flEmotion">—</span></span>
+              </div>
+              <div class="fl-meter"><div class="fl-meter__top"><span data-i18n="fl.smile">sorriso</span><span id="flSmileVal">0%</span></div><div class="fl-meter__bar"><i id="flSmileBar"></i></div></div>
+              <div class="fl-meter"><div class="fl-meter__top"><span data-i18n="fl.surprise">surpresa</span><span id="flSurpriseVal">0%</span></div><div class="fl-meter__bar"><i id="flSurpriseBar"></i></div></div>
+              <div class="fl-stats fl-stats--2">
+                <div class="fl-stat"><b id="flExpChanges">0</b><em data-i18n="fl.changes">mudanças</em></div>
+                <div class="fl-stat"><b id="flSmileTime">0s</b><em data-i18n="fl.smileTime">tempo sorrindo</em></div>
+              </div>
+            </section>
+
+            <!-- 02 · Olhos -->
+            <section class="fl-block">
+              <header class="fl-block__h"><span class="fl-block__ix">02</span><span data-i18n="fl.eyes">Olhos</span></header>
+              <div class="fl-stats fl-stats--3">
+                <div class="fl-stat"><b id="flBpm">0</b><em data-i18n="fl.bpm">piscadas/min</em></div>
+                <div class="fl-stat"><b id="flEyeState">—</b><em data-i18n="fl.eyeState">estado</em></div>
+                <div class="fl-stat"><b id="flGaze">0%</b><em data-i18n="fl.gaze">contato visual</em></div>
+              </div>
+            </section>
+
+            <!-- 03 · Gestos -->
+            <section class="fl-block">
+              <header class="fl-block__h"><span class="fl-block__ix">03</span><span data-i18n="fl.gestures">Gestos</span></header>
+              <div class="fl-stats fl-stats--3">
+                <div class="fl-stat fl-stat--wide"><b id="flGesture" data-i18n="fl.noHand">nenhuma mão</b><em data-i18n="fl.gestureLbl">gesto reconhecido</em></div>
+                <div class="fl-stat"><b id="flHands">0</b><em data-i18n="fl.handsN">mãos</em></div>
+                <div class="fl-stat"><b id="flFingers">0</b><em data-i18n="fl.fingers">dedos</em></div>
+              </div>
+            </section>
+
+            <!-- 04 · Estatísticas + score -->
+            <section class="fl-block fl-block--score">
+              <header class="fl-block__h"><span class="fl-block__ix">04</span><span data-i18n="fl.stats">Estatísticas</span></header>
+              <div class="fl-scorewrap">
+                <div class="fl-score">
+                  <svg class="fl-score__ring" viewBox="0 0 120 120">
+                    <circle class="fl-score__track" cx="60" cy="60" r="52" />
+                    <circle class="fl-score__fill" id="flScoreRing" cx="60" cy="60" r="52" />
+                  </svg>
+                  <div class="fl-score__center"><span id="flScore">0</span><em data-i18n="fl.score">score</em></div>
+                </div>
+                <div class="fl-stats fl-stats--3 fl-stats--tight">
+                  <div class="fl-stat"><b id="flTime">0s</b><em data-i18n="fl.interTime">interação</em></div>
+                  <div class="fl-stat"><b id="flExpTotal">0</b><em data-i18n="fl.expDetected">expressões</em></div>
+                  <div class="fl-stat"><b id="flGestTotal">0</b><em data-i18n="fl.gestDetected">gestos</em></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ 04 · VITRINE — marquee arrastável (djectstudio) ══════════ -->
     <section class="works" id="vitrine">
       <div class="works__head">
         <div class="section-tag reveal-up"><span class="tag-dot"></span><span data-i18n="works.tag">no ar</span></div>
@@ -379,5 +504,6 @@
   <script src="js/data.js" defer></script>
   <script src="js/effects.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/facelab.js" type="module"></script>
 </body>
 </html>

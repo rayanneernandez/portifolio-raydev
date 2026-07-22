@@ -11,7 +11,18 @@ js/i18n.js          → traduções EN e ES (o PT é o texto do próprio HTML)
 js/data.js          → DADOS: projetos, certificações, imagens do marquee, skills
 js/effects.js       → efeitos de canvas (partículas, terminal, boneco de visão computacional)
 js/main.js          → animações de scroll (GSAP + Lenis), cursor, nav, idioma, tema, loader
+js/facelab.js       → Face Lab: análise facial ao vivo com MediaPipe (módulo ES)
+img/icons/          → logos das skills (SVG locais, não dependem de CDN)
 ```
+
+## Face Lab (análise facial ao vivo)
+
+3ª seção do site. Usa a webcam + **MediaPipe Tasks Vision** (Face Landmarker + Hand Landmarker) pra detectar expressões, olhos e gestos em tempo real, tudo no navegador — **nada é enviado nem gravado**.
+
+- Só funciona em **HTTPS** (Vercel/GitHub Pages ok) ou `localhost`; a câmera é pedida só quando a pessoa clica em "Ativar câmera".
+- Os modelos de IA (~alguns MB) são baixados do CDN do MediaPipe (`cdn.jsdelivr.net` + `storage.googleapis.com`) apenas nesse clique.
+- Se a câmera for negada ou os modelos não carregarem, aparece um estado de erro elegante com botão "tentar de novo".
+- Métricas em `js/facelab.js`: derivadas dos *blendshapes* (sorriso, surpresa, piscadas, contato visual) e dos landmarks das mãos (dedos levantados, gestos).
 
 ## Idiomas e tema
 
