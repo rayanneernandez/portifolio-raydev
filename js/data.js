@@ -22,9 +22,19 @@ const MARQUEE_B = [
 ];
 
 /* galeria de projetos — clique abre as fotos
-   pra adicionar mais fotos de um projeto, é só acrescentar no array "images"
+   pra adicionar mais fotos de um projeto, é só acrescentar no array "images".
+   Imagens que começam com "img/" ou "http" são usadas direto (locais);
+   as demais vêm do repositório antigo (IMG_BASE).
    desc = português · desc_en = inglês · desc_es = espanhol */
 const PROJECTS = [
+  {
+    name: 'Way — Bot Financeiro no Telegram',
+    desc: 'Assistente de controle financeiro no Telegram com IA. Registra entradas, gastos, empréstimos, contas a pagar, cartão de crédito e transferências por texto, áudio (transcreve a voz) ou foto do comprovante (lê o valor sozinho). Reconhece o banco, responde saldos e "no que você mais gasta", controla metas, limites e orçamentos, gera relatório do mês em PDF e envia avisos automáticos de vencimento e saldo. Fala português e inglês.',
+    desc_en: 'AI-powered personal finance assistant on Telegram. Logs income, expenses, loans, bills, credit card and transfers — via text, voice (transcribed) or a photo of the receipt (reads the amount automatically). Detects the bank, answers balances and "where you spend the most", tracks goals, limits and budgets, generates a monthly PDF report and sends automatic due-date and balance alerts. Speaks Portuguese and English.',
+    desc_es: 'Asistente de finanzas personales en Telegram con IA. Registra ingresos, gastos, préstamos, cuentas por pagar, tarjeta de crédito y transferencias — por texto, audio (lo transcribe) o foto del comprobante (lee el importe solo). Reconoce el banco, responde saldos y "en qué gastas más", controla metas, límites y presupuestos, genera un informe mensual en PDF y envía avisos automáticos de vencimiento y saldo. Habla portugués e inglés.',
+    images: ['img/way/way-1.png', 'img/way/way-2.png', 'img/way/way-3.png', 'img/way/way-4.png', 'img/way/way-5.png', 'img/way/way-6.png'],
+    tags: ['Telegram Bot', 'IA', 'OCR', 'Voz', 'PDF'],
+  },
   {
     name: 'Painel de Operações',
     desc: 'Painel centralizado para monitorar e apoiar a tomada de decisões operacionais em tempo real.',
@@ -82,12 +92,12 @@ const PROJECTS = [
     tags: ['React', 'Vite', 'TypeScript'],
   },
   {
-    name: 'Controle de Estoque',
-    desc: 'Solução mobile para gerenciamento de estoque com interface simples e rápida.',
-    desc_en: 'Mobile solution for inventory management with a simple, fast interface.',
-    desc_es: 'Solución móvil para gestión de inventario con una interfaz simple y rápida.',
-    images: ['controleestoque.jpg'],
-    tags: ['TypeScript', 'Tailwind', 'Mobile'],
+    name: 'Ranking de Técnicos',
+    desc: 'Sistema de ranking para otimizar o acompanhamento de performance de técnicos.',
+    desc_en: 'Ranking system to optimize technician performance tracking.',
+    desc_es: 'Sistema de ranking para optimizar el seguimiento del desempeño de técnicos.',
+    images: ['rankingtecnicos.jpg'],
+    tags: ['TypeScript', 'JavaScript'],
   },
   {
     name: 'Sites para Elevadores',
@@ -130,14 +140,6 @@ const PROJECTS = [
     tags: ['TypeScript', 'JavaScript'],
   },
   {
-    name: 'Ranking de Técnicos',
-    desc: 'Sistema de ranking para otimizar o acompanhamento de performance de técnicos.',
-    desc_en: 'Ranking system to optimize technician performance tracking.',
-    desc_es: 'Sistema de ranking para optimizar el seguimiento del desempeño de técnicos.',
-    images: ['rankingtecnicos.jpg'],
-    tags: ['TypeScript', 'JavaScript'],
-  },
-  {
     name: 'Controle de Solicitações',
     desc: 'Plataforma para gerenciar solicitações de melhorias em sistemas corporativos.',
     desc_en: 'Platform to manage improvement requests for corporate systems.',
@@ -145,12 +147,25 @@ const PROJECTS = [
     images: ['painel_de_solicitacoes.PNG'],
     tags: ['JavaScript', 'HTML', 'CSS'],
   },
+  {
+    name: 'Controle de Estoque',
+    desc: 'Solução mobile para gerenciamento de estoque com interface simples e rápida.',
+    desc_en: 'Mobile solution for inventory management with a simple, fast interface.',
+    desc_es: 'Solución móvil para gestión de inventario con una interfaz simple y rápida.',
+    images: ['controleestoque.jpg'],
+    tags: ['TypeScript', 'Tailwind', 'Mobile'],
+  },
 ];
 
-/* certificações */
+/* certificações — link pode ser uma foto do certificado (img/cert-*.jpg) ou uma URL */
 const CERTS = [
+<<<<<<< HEAD
   { year: '2026', name: 'Análise e Desenvolvimento de Sistemas', inst: 'UNISUAM · Graduação tecnológica', link: 'img/cert-ads.jpg' },
   { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
+=======
+  { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
+  { year: '2026', name: 'Análise e Desenvolvimento de Sistemas', inst: 'UNISUAM · Graduação tecnológica', link: 'img/cert-ads.jpg' },
+>>>>>>> cc7c677 (Atualizando tudo)
   { year: '2025', name: 'AWS Cloud Practitioner Essentials', inst: 'AWS Training & Certification · Cloud', link: 'img/cert-aws-cloud.jpg' },
   { year: '2025', name: 'Looker Studio — Criando o primeiro relatório', inst: 'Alura · Análise de dados', link: 'https://cursos.alura.com.br/certificate/1dcf01b3-bdec-482e-8fed-71078dac2458' },
   { year: '2025', name: 'Linux I — Conhecendo o Terminal', inst: 'Alura', link: 'https://cursos.alura.com.br/certificate/111e30d8-904b-47a7-924a-2e2a42e30797' },

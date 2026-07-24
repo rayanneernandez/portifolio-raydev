@@ -518,6 +518,7 @@ function runMarquee(track, dir) {
   });
 }
 
+<<<<<<< HEAD
 /* ─── grid de projetos (galeria clicável) ─── */
 /* mostra só 2 linhas de cards por vez, o resto vai pra paginação por bolinhas */
 let projPage = 0;
@@ -538,12 +539,36 @@ function buildProjects() {
   const card = (p, i) => `
     <article class="g-card" data-idx="${i}" data-hover>
       <img src="${IMG_BASE}${p.images[0]}" alt="${p.name}" loading="lazy" draggable="false"
+=======
+/* resolve caminho: locais (img/… ou http) usam direto; o resto vem do IMG_BASE */
+function imgSrc(name) {
+  return /^(https?:|img\/|\.?\/)/.test(name) ? name : IMG_BASE + name;
+}
+
+/* ─── grid de projetos — 2 linhas por página + bolinhas de paginação ─── */
+let projPage = 0;
+
+function projCols() {
+  const w = innerWidth;
+  if (w >= 1500) return 5;
+  if (w >= 1150) return 4;
+  if (w >= 760) return 3;
+  return 2;
+}
+const projPerPage = () => projCols() * 2; // sempre 2 linhas
+
+function cardHTML(p, i) {
+  return `
+    <article class="g-card" data-idx="${i}" data-hover>
+      <img src="${imgSrc(p.images[0])}" alt="${p.name}" loading="lazy" draggable="false"
+>>>>>>> cc7c677 (Atualizando tudo)
            onerror="this.parentElement.classList.add('g-card--fallback'); this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${p.name.split('—')[0].replace(/'/g, '').trim()}'}))" />
       <div class="g-card__overlay">
         <h3>${p.name}</h3>
         <span class="g-card__photos"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> ${p.images.length} ${p.images.length > 1 ? t('ui.photos') : t('ui.photo')}</span>
       </div>
     </article>`;
+<<<<<<< HEAD
 
   function render(animate) {
     const size = perPage();
@@ -568,6 +593,58 @@ function buildProjects() {
   }
 
   render(false);
+=======
+}
+
+function renderProjPage(page, animate) {
+  const grid = document.getElementById('projectsGrid');
+  const dots = document.getElementById('projectsDots');
+  const per = projPerPage();
+  const pages = Math.ceil(PROJECTS.length / per);
+  projPage = Math.max(0, Math.min(page, pages - 1));
+
+  grid.style.gridTemplateColumns = 'repeat(' + projCols() + ', 1fr)';
+
+  const paint = () => {
+    const start = projPage * per;
+    const slice = PROJECTS.slice(start, start + per);
+    grid.innerHTML = slice.map((p) => cardHTML(p, PROJECTS.indexOf(p))).join('');
+    grid.classList.remove('is-swapping');
+  };
+
+  if (animate) {
+    grid.classList.add('is-swapping');
+    setTimeout(paint, 220);
+  } else {
+    paint();
+  }
+
+  // bolinhas
+  dots.innerHTML = '';
+  if (pages > 1) {
+    for (let i = 0; i < pages; i++) {
+      const b = document.createElement('button');
+      b.className = 'projects__dot' + (i === projPage ? ' is-active' : '');
+      b.setAttribute('aria-label', 'Página ' + (i + 1));
+      b.setAttribute('data-hover', '');
+      b.addEventListener('click', () => renderProjPage(i, true));
+      dots.appendChild(b);
+    }
+  }
+
+  // setas (desabilita nas pontas)
+  const pager = document.querySelector('.projects__pager');
+  if (pager) pager.style.display = pages > 1 ? 'flex' : 'none';
+  const prev = document.getElementById('projPrev');
+  const next = document.getElementById('projNext');
+  if (prev) prev.toggleAttribute('disabled', projPage === 0);
+  if (next) next.toggleAttribute('disabled', projPage === pages - 1);
+}
+
+function buildProjects() {
+  const grid = document.getElementById('projectsGrid');
+  renderProjPage(0, false);
+>>>>>>> cc7c677 (Atualizando tudo)
 
   grid.addEventListener('click', (e) => {
     const c = e.target.closest('.g-card');
@@ -586,6 +663,22 @@ function buildProjects() {
   window.addEventListener('resize', () => {
     clearTimeout(rt);
     rt = setTimeout(() => render(false), 200);
+  });
+
+  // setas de navegação
+  const prev = document.getElementById('projPrev');
+  const next = document.getElementById('projNext');
+  if (prev) prev.addEventListener('click', () => renderProjPage(projPage - 1, true));
+  if (next) next.addEventListener('click', () => renderProjPage(projPage + 1, true));
+
+  // recalcula colunas/página ao mudar a largura da janela
+  let rt;
+  let lastCols = projCols();
+  window.addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      if (projCols() !== lastCols) { lastCols = projCols(); renderProjPage(0, false); }
+    }, 200);
   });
 }
 
@@ -621,7 +714,7 @@ function showPhoto(i) {
   const total = pmProject.images.length;
   pmIdx = Math.max(0, Math.min(i, total - 1));
   const img = document.getElementById('pmImg');
-  img.src = IMG_BASE + pmProject.images[pmIdx];
+  img.src = imgSrc(pmProject.images[pmIdx]);
   img.alt = `${pmProject.name} — foto ${pmIdx + 1}`;
   document.getElementById('pmCount').textContent = `${pmIdx + 1} / ${total}`;
   document.getElementById('pmPrev').toggleAttribute('disabled', pmIdx === 0);
