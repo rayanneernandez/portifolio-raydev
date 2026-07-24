@@ -149,15 +149,17 @@ const PROJECTS = [
 
 /* certificações */
 const CERTS = [
-  { year: '2025', name: 'AWS Cloud Practitioner Essentials', inst: 'AWS Training & Certification · Cloud' },
+  { year: '2026', name: 'Análise e Desenvolvimento de Sistemas', inst: 'UNISUAM · Graduação tecnológica', link: 'img/cert-ads.jpg' },
+  { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
+  { year: '2025', name: 'AWS Cloud Practitioner Essentials', inst: 'AWS Training & Certification · Cloud', link: 'img/cert-aws-cloud.jpg' },
   { year: '2025', name: 'Looker Studio — Criando o primeiro relatório', inst: 'Alura · Análise de dados', link: 'https://cursos.alura.com.br/certificate/1dcf01b3-bdec-482e-8fed-71078dac2458' },
   { year: '2025', name: 'Linux I — Conhecendo o Terminal', inst: 'Alura', link: 'https://cursos.alura.com.br/certificate/111e30d8-904b-47a7-924a-2e2a42e30797' },
   { year: '2025', name: 'Oratória para Líderes', inst: 'Alura · Comunicação profissional', link: 'https://cursos.alura.com.br/certificate/b096ef72-93e5-4a8a-ac2f-6ac4ac6218ec' },
-  { year: '2024', name: 'Fundamentos de Liderança', inst: 'Voitto · Comportamento', link: 'https://imagens-voitto.s3.amazonaws.com/certificados/UkE9NTA5MytSQj01MzAyMzU=.pdf' },
-  { year: '2023', name: 'Fundamentos do Power BI', inst: 'Voitto · Análise de dados', link: 'https://imagens-voitto.s3.amazonaws.com/certificados/UkE9NDQ0NytSQj01MzAyMzU=.pdf' },
-  { year: '2023', name: 'Fundamentos de Minitab', inst: 'Voitto · Análise de dados', link: 'https://imagens-voitto.s3.amazonaws.com/certificados/UkE9Mzc3NytSQj01MzAyMzU=.pdf' },
-  { year: '2023', name: 'Empreendedorismo Digital', inst: 'Formação empreendedora' },
-  { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
+  { year: '2024', name: 'Fundamentos de Liderança', inst: 'Voitto · Comportamento', link: 'img/cert-lideranca.jpg' },
+  { year: '2023', name: 'Desenvolvimento Front-End para Web', inst: 'UNISUAM · Qualificação tecnológica', link: 'img/cert-front-end.jpg' },
+  { year: '2023', name: 'Fundamentos do Power BI', inst: 'Voitto · Análise de dados' },
+  { year: '2023', name: 'Fundamentos de Minitab', inst: 'Voitto · Análise de dados' },
+  { year: '2023', name: 'Empreendedorismo Digital', inst: 'Formação empreendedora', link: 'img/cert-empreendedorismo.jpg' },
 ];
 
 /* skills flutuantes — logos via simpleicons (slug + cor da marca)

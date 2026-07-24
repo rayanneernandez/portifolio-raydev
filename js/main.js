@@ -519,21 +519,73 @@ function runMarquee(track, dir) {
 }
 
 /* ─── grid de projetos (galeria clicável) ─── */
+/* mostra só 2 linhas de cards por vez, o resto vai pra paginação por bolinhas */
+let projPage = 0;
+
 function buildProjects() {
   const grid = document.getElementById('projectsGrid');
-  grid.innerHTML = PROJECTS.map((p, i) => `
-    <article class="g-card reveal-up" data-idx="${i}" data-hover>
+  const dots = document.getElementById('projectsDots');
+
+  // quantas colunas o grid está mostrando agora (segue o minmax(290px) do CSS)
+  const colsPerRow = () => {
+    const cs = getComputedStyle(grid);
+    const gap = parseFloat(cs.columnGap) || 20;
+    const inner = grid.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    return Math.max(1, Math.floor((inner + gap) / (290 + gap)));
+  };
+  const perPage = () => colsPerRow() * 2; // sempre 2 linhas
+
+  const card = (p, i) => `
+    <article class="g-card" data-idx="${i}" data-hover>
       <img src="${IMG_BASE}${p.images[0]}" alt="${p.name}" loading="lazy" draggable="false"
            onerror="this.parentElement.classList.add('g-card--fallback'); this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${p.name.split('—')[0].replace(/'/g, '').trim()}'}))" />
       <div class="g-card__overlay">
         <h3>${p.name}</h3>
         <span class="g-card__photos"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> ${p.images.length} ${p.images.length > 1 ? t('ui.photos') : t('ui.photo')}</span>
       </div>
-    </article>`).join('');
+    </article>`;
+
+  function render(animate) {
+    const size = perPage();
+    const pages = Math.max(1, Math.ceil(PROJECTS.length / size));
+    projPage = Math.min(Math.max(projPage, 0), pages - 1);
+
+    const start = projPage * size;
+    grid.innerHTML = PROJECTS.slice(start, start + size)
+      .map((p, k) => card(p, start + k)).join('');
+
+    if (animate && window.gsap) {
+      gsap.fromTo(grid.children,
+        { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: .6, ease: 'power3.out', stagger: .06 });
+    }
+
+    dots.innerHTML = pages > 1
+      ? Array.from({ length: pages }, (_, n) =>
+          `<button class="projects__dot ${n === projPage ? 'is-active' : ''}" data-page="${n}" role="tab" aria-selected="${n === projPage}" aria-label="Página ${n + 1} de ${pages}"></button>`).join('')
+      : '';
+    dots.classList.toggle('is-hidden', pages <= 1);
+  }
+
+  render(false);
 
   grid.addEventListener('click', (e) => {
-    const card = e.target.closest('.g-card');
-    if (card) openModal(+card.dataset.idx);
+    const c = e.target.closest('.g-card');
+    if (c) openModal(+c.dataset.idx);
+  });
+
+  dots.addEventListener('click', (e) => {
+    const b = e.target.closest('.projects__dot');
+    if (!b) return;
+    projPage = +b.dataset.page;
+    render(true);
+  });
+
+  // recalcula colunas/páginas quando a largura muda
+  let rt;
+  window.addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => render(false), 200);
   });
 }
 
@@ -584,7 +636,9 @@ function closeModal() {
 /* ─── certificações (tickets) ─── */
 function buildCerts() {
   const grid = document.getElementById('certsGrid');
-  grid.innerHTML = CERTS.map((c, i) => `
+  // "cursando agora" (soon) sempre em primeiro; o resto mantém a ordem original
+  const ordered = [...CERTS].sort((a, b) => (b.soon ? 1 : 0) - (a.soon ? 1 : 0));
+  grid.innerHTML = ordered.map((c, i) => `
     <div class="cert-ticket ${c.soon ? 'cert-ticket--soon' : ''} reveal-up" data-hover>
       <div class="cert-ticket__band"><span>${c.year}</span></div>
       <div class="cert-ticket__body">
@@ -595,6 +649,11 @@ function buildCerts() {
         ${c.soon ? `<span class="cert-ticket__badge">${t('ui.studying')}</span>` : ''}
       </div>
     </div>`).join('');
+
+  // mantém o contador "certificações" (stat) sempre igual ao total real
+  const certStat = document.querySelector('.stat__label[data-i18n="about.s3"]')
+    ?.closest('.stat')?.querySelector('.stat__num');
+  if (certStat) certStat.dataset.count = CERTS.length;
 }
 
 /* ─── skills flutuantes ─── */

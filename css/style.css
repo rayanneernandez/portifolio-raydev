@@ -715,6 +715,20 @@ section { position: relative; }
 }
 .g-card:hover .g-card__photos { background: var(--accent); color: #fff; }
 
+/* ─── paginação por bolinhas ─── */
+.projects__dots {
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  padding: 44px clamp(20px, 6vw, 80px) 0;
+}
+.projects__dots.is-hidden { display: none; }
+.projects__dot {
+  width: 9px; height: 9px; padding: 0; border: none; cursor: pointer;
+  border-radius: 100px; background: var(--line);
+  transition: background .3s ease, width .3s ease, transform .2s ease;
+}
+.projects__dot:hover { background: var(--ink-soft); transform: scale(1.15); }
+.projects__dot.is-active { width: 28px; background: var(--accent); transform: none; }
+
 /* ─── modal de fotos ─── */
 .pmodal { position: fixed; inset: 0; z-index: 2000; display: none; }
 .pmodal.is-open { display: block; }
@@ -924,7 +938,8 @@ section { position: relative; }
   .nav__links { display: none; }
   .nav__cta { display: none; }
   .theme-btn:not(.theme-btn--menu) { display: none; } /* no celular o tema fica dentro do menu */
-  .nav__ctrl { gap: 10px; }
+  /* sem os links, o ctrl escorregaria pra coluna do meio — força ele na última, à direita */
+  .nav__ctrl { grid-column: 3; justify-self: end; gap: 10px; }
   .lang__btn { padding: 7px 11px; }
   .nav__burger { display: flex; }
 }
