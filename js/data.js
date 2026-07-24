@@ -159,13 +159,8 @@ const PROJECTS = [
 
 /* certificações — link pode ser uma foto do certificado (img/cert-*.jpg) ou uma URL */
 const CERTS = [
-<<<<<<< HEAD
-  { year: '2026', name: 'Análise e Desenvolvimento de Sistemas', inst: 'UNISUAM · Graduação tecnológica', link: 'img/cert-ads.jpg' },
-  { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
-=======
   { year: '2026', name: 'Análise de Dados com Python', inst: 'Em andamento', soon: true },
   { year: '2026', name: 'Análise e Desenvolvimento de Sistemas', inst: 'UNISUAM · Graduação tecnológica', link: 'img/cert-ads.jpg' },
->>>>>>> cc7c677 (Atualizando tudo)
   { year: '2025', name: 'AWS Cloud Practitioner Essentials', inst: 'AWS Training & Certification · Cloud', link: 'img/cert-aws-cloud.jpg' },
   { year: '2025', name: 'Looker Studio — Criando o primeiro relatório', inst: 'Alura · Análise de dados', link: 'https://cursos.alura.com.br/certificate/1dcf01b3-bdec-482e-8fed-71078dac2458' },
   { year: '2025', name: 'Linux I — Conhecendo o Terminal', inst: 'Alura', link: 'https://cursos.alura.com.br/certificate/111e30d8-904b-47a7-924a-2e2a42e30797' },

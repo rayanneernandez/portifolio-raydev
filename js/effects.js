@@ -500,11 +500,14 @@ FX.initPose = function () {
     ctx.font = `500 12px 'JetBrains Mono', monospace`;
     const label = ` dev.detectada — conf: ${conf} `;
     const lw = ctx.measureText(label).width + 10;
-    const ly = (by - 26 < 4) ? by + 4 : by - 26;
+    const boxH = 24; // um pouco mais alta pra caber a escrita toda dentro do roxo
+    const ly = (by - boxH - 4 < 4) ? by + 4 : by - boxH - 2;
     ctx.fillStyle = accCol;
-    ctx.fillRect(bx, ly, lw, 22);
+    ctx.fillRect(bx, ly, lw, boxH);
     ctx.fillStyle = '#0c0c0b';
-    ctx.fillText(label, bx + 5, ly + 5);
+    ctx.textBaseline = 'middle'; // centraliza verticalmente — evita cortar o topo da letra
+    ctx.fillText(label, bx + 5, ly + boxH / 2 + 1);
+    ctx.textBaseline = 'alphabetic';
 
     // mini crosshair seguindo a cabeça
     ctx.strokeStyle = 'rgba(245,244,240,.3)';
